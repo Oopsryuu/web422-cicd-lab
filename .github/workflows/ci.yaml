@@ -1,0 +1,29 @@
+name: CI
+on: [push]
+
+jobs:
+  run-tests:
+    name: Lint and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: install node20
+        uses: actions/checkout@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Run ESlint
+        run: npm run lint
+
+      - name: unit test
+        run: npm run test:ci
+
+      - name: end-to-end test
+        uses: cypress-io/github-action@v6
